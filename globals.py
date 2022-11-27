@@ -16,8 +16,8 @@ INACTIVITY_LOGOUT_TIME = INACTIVITY_LOGOUT_SECONDS + INACTIVITY_LOGOUT_MINUTES*6
 # App Core
 app = Flask(__name__)
 CORS(app)
-#app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://efemscpqmxlctp:4fbe8cae307b501ce9e0c84a5d08245586f9fe94971e752ab26a2c9a48722be2@ec2-54-170-90-26.eu-west-1.compute.amazonaws.com:5432/dq1dfkpr05s3r'
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:postgres@localhost:5432/postgres'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://efemscpqmxlctp:4fbe8cae307b501ce9e0c84a5d08245586f9fe94971e752ab26a2c9a48722be2@ec2-54-170-90-26.eu-west-1.compute.amazonaws.com:5432/dq1dfkpr05s3r'
+#app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:postgres@localhost:5432/postgres'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = "postgres"
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=INACTIVITY_LOGOUT_TIME)
