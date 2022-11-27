@@ -19,22 +19,7 @@
             {% else %}
                 <input class="login_form_textbox" type="text" name="password" id="password" value="{{ selectedUser['password'] }}">
             {% endif %}
-            <label for="role"><b>User role</b></label>
-            {% if (selectedUser['role'] >= 2) %}
-                <select name="role" class="login_form_textbox" id="role">
-                    {% if (selectedUser['role'] == 3) %}
-                        <option value=3 selected>Customer</option>
-                        <option value=2>Farmer</option>
-                    {% else %}
-                        <option value=3>Customer</option>
-                        <option value=2 selected>Farmer</option>
-                    {% endif %}
-            {% else %}
-                <select name="role" class="login_form_textbox" id="role" value="{{ selectedUser['role'] }}">
-                    <option value=-1 selected>Privileged</option>
-            {% endif %}
-            </select>
-            <label for="permissions"><b>Permissions</b></label>
+            <label for="permissions"><b>User role and permissions</b></label>
             {% if user['id'] == selectedUser['id'] %}
                 <select name="permissions" disabled=true class="login_form_textbox" id="permissions">
             {% else %}
@@ -43,15 +28,23 @@
                 {% if (selectedUser['role'] == 0) %}
                     <option value=0 selected>Administrator</option>
                     <option value=1>Moderator</option>
-                    <option value=3>Basic</option>
+                    <option value=2>Farmer</option>
+                    <option value=3>Customer</option>
                 {% elif (selectedUser['role'] == 1) %}
                     <option value=0>Administrator</option>
                     <option value=1 selected>Moderator</option>
-                    <option value=3>Basic</option>
-                {% else %}
+                    <option value=2>Farmer</option>
+                    <option value=3>Customer</option>
+                {% elif (selectedUser['role'] == 2) %}
                     <option value=0>Administrator</option>
                     <option value=1>Moderator</option>
-                    <option value=3 selected>Basic</option>
+                    <option value=2 selected>Farmer</option>
+                    <option value=3>Customer</option>
+                {% elif (selectedUser['role'] == 3) %}
+                    <option value=0>Administrator</option>
+                    <option value=1>Moderator</option>
+                    <option value=2>Farmer</option>
+                    <option value=3 selected>Customer</option>
                 {% endif %}
             </select>
             <label for="birthday"><b>Birthday</b></label>

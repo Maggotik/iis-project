@@ -237,7 +237,6 @@ def admin_user_selected(id):
         email = request.form['email']
     else:
         email = user['email']
-    role = request.form['role']
     if ('permissions' in request.form):
         permissions = request.form['permissions']
     else:
@@ -250,12 +249,7 @@ def admin_user_selected(id):
     else:
         password = user['password']
 
-    new_role = 4
-    if (int(role) < 0):
-        new_role = permissions
-    else:
-        new_role = role
-
+    new_role = permissions
     user = be.getUserRow(id)
     if (user['password'] == password and user['name'] == name and user['email'] == email and user['role'] == int(new_role) and user['birth_date'] == birthday and user['address'] == address and str(user['phone_number']) == phone):
         return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=-1, suggestions=database.getCategoryNames())
