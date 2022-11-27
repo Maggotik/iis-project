@@ -802,8 +802,8 @@ def new_order_go(isRepeat):
 
 be.loadJinjaGlobals()
 be.navigationLoadPages()
-be.logoutUser()
 
 if __name__ == '__main__': 
+    be.logoutUser()
     be.init()
     globals.app.run(debug=True)
