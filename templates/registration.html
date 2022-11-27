@@ -30,9 +30,11 @@
             {% elif error == -1 %}
                 <p style="text-align: center; height: 30px; color: red; text-decoration: solid; font-weight: bold;">Passwords does not match!</p>
             {% elif error == 3 %}
-                <p style="text-align: center; height: 30px; color: red; text-decoration: solid; font-weight: bold;">Your name is too long.</p>
+                <p style="text-align: center; height: 30px; color: red; text-decoration: solid; font-weight: bold;">Invalid name.</p>
             {% elif error == 4 %}
                 <p style="text-align: center; height: 30px; color: red; text-decoration: solid; font-weight: bold;">Invalid format of e-mail address.</p>
+            {% elif error == 5 %}
+                <p style="text-align: center; height: 30px; color: red; text-decoration: solid; font-weight: bold;">Your name is too long.</p>
             {% endif %}
             <button type="submit" class="login_form_button" id="user_btn" name="user_btn">Register</button>
         </form>

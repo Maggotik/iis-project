@@ -178,8 +178,10 @@ def register_user():
         return render_template('/registration.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, error=-1)
     result = be.newUser(login, password, name, 2 + int(isFarmer))
     if (result == 0):
-        user = be.getUserRow(user_email=login)
+        user = database.getUserByEmail(login)
         be.setLoggedUser(user)
+        newUser = database.FlaskUser(user['id'], user['email'])
+        flogin.login_user(newUser)
         return redirect(url_for('home'))     # or: after registration page
     else:
         return render_template('/registration.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, error=result)

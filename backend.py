@@ -561,12 +561,15 @@ def editCategoryData(category_id, category_data, value):
 def newUser(login, password, name, role):
     if (database.getUserByEmail(login) != None):
         return 1
-    if (isPassword(password)):
+    if isPassword(password) != 0:
         return 2
-    if (isName(name) != 0):
-        return 3
+    if isName(name) != 0:
+        if len(name) != 0:
+            return 3
     if isEmail(login) != 0:
         return 4
+    if len(name) > database.DB_STRING_SHORT_MAX:
+        return 5
     if (len(name) < 1):
         name = "User"
     database.addUser(login, name, password, role)
@@ -585,10 +588,8 @@ def getLoggedUser():
     #new_user = database.getUser(user_id)
     #globals.logged_user = new_user
     if not '_user_id' in session:
-        print('not logged in!')
         return database.unregistered_user
     else:
-        print('logged in as: '+session['_user_id'])
         return database.getUser(int(session['_user_id']))
 
 def isUserLogged():
@@ -606,8 +607,8 @@ def getFlaskUser(user_id):
     return None
 
 def setLoggedUser(user):
-    globals.logged_user = user
-    globals.user_logged_in = True
+    #globals.logged_user = user
+    #globals.user_logged_in = True
 
     selectedUser = getFlaskUser(user['id'])
     selectedUser.logged = True
