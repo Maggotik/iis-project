@@ -152,10 +152,10 @@ def login_user():
     password = request.form.get("pass")
     if (be.validateUser(login, password)):
         user = be.getUserRow(user_email=login)
-        be.setLoggedUser(user)
+        #be.setLoggedUser(user)
         newUser = database.FlaskUser(user['id'], user['email'])
         flogin.login_user(newUser)
-        #globals.logged_users.append(newUser)
+        #be.getLoggedUser()s.append(newUser)
         return redirect(url_for('home'))
     else:
         return render_template('/login.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, error=True)
@@ -176,10 +176,10 @@ def register_user():
     isFarmer = request.form.get("role")
     if (password != password2):
         return render_template('/registration.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, error=-1)
-    result = be.newUser(login, password, name, 2 + int(isFarmer))
+    result = be.newUser(login, password, name, 3 - int(isFarmer))
     if (result == 0):
         user = database.getUserByEmail(login)
-        be.setLoggedUser(user)
+        #be.setLoggedUser(user)
         newUser = database.FlaskUser(user['id'], user['email'])
         flogin.login_user(newUser)
         return redirect(url_for('home'))     # or: after registration page
@@ -201,7 +201,7 @@ def admin_selected_user_action(id):
     if 'reset_btn' in request.form.keys() and request.form['reset_btn'] == "0":
         return redirect(url_for('admin_users'))
 
-    if globals.logged_user['id'] == id:
+    if be.getLoggedUser()['id'] == id:
         s = id
         error = 1
     else:
@@ -214,7 +214,7 @@ def admin_selected_user_action(id):
     
 @app.route("/nav/admin/users/remove/<int:id>", methods=["GET"])
 def admin_selected_user_remove(id):
-    if globals.logged_user['id'] == id:
+    if be.getLoggedUser()['id'] == id:
         s = id
         error = 1
     else:
@@ -595,7 +595,7 @@ def user_settings_edit_save(t):
 @app.route("/nav/user/settings/remove", methods=["POST"])
 def user_settings_removeAccount():
     password = request.form['password']
-    if (password != globals.logged_user['password']):
+    if (password != be.getLoggedUser()['password']):
             return render_template('/user/settings.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, page=3, user_calendar=be.getUserCalendar(be.getLoggedUser()), error=0)
     
     r = be.removeUser()
@@ -811,6 +811,7 @@ def new_order_go(isRepeat):
 
 be.loadJinjaGlobals()
 be.navigationLoadPages()
+be.logoutUser()
 
 if __name__ == '__main__': 
     be.init()

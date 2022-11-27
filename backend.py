@@ -590,13 +590,22 @@ def getLoggedUser():
     if not '_user_id' in session:
         return database.unregistered_user
     else:
-        return database.getUser(int(session['_user_id']))
+        r = database.getUser(int(session['_user_id']))
+        if (r == None):
+            print('User '+str(session['_user_id'])+' is in session, but not found. Logging out.')
+            return database.unregistered_user
+        else:
+            return r
 
 def isUserLogged():
     if not '_user_id' in session:
         return False
     else:
-        return True
+        r = database.getUser(int(session['_user_id']))
+        if (r != None):
+            return True
+        else:
+            return False
 
 def getFlaskUser(user_id):
     if (len(globals.logged_users) == 0):
