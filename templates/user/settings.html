@@ -24,7 +24,7 @@
                 <form method="post" action="{{ url_for('user_settings_edit_save', t=0) }}">
             {% endif %}
             <label for="birthday"><b>Birthday</b></label>
-            <input class="profile_user_data" type="text" name="birthday" id="birthday" value="{{ getUserBirthdate(user) }}">
+            <input class="profile_user_data" type="date" name="birthday" id="birthday" value="{{ getUserBirthdate(user) }}">
             <label for="address"><b>Address</b></label>
             <input class="profile_user_data" type="text" name="address" id="address" value="{{ getUserAddress(user) }}">
             <label for="phone"><b>Phone number</b></label>

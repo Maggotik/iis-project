@@ -259,31 +259,40 @@ def admin_user_selected(id):
         return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=r)
 
     r = be.isName(name)
-    if (r != 0):
+    if (r != 0 and len(name) != 0):
         return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=r)
     
     r = be.isPassword(password)
-    if (r != 0):
+    if (r != 0 and user['password'] != password):
         return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=r)
     
     r = be.isPhoneNumber(phone)
-    if (r != 0):
+    if (r != 0 and len(phone) != 0):
         return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=r)
     
     r = be.isDate(birthday)
-    if (r != 0):
+    if (r != 0 and len(birthday) != 0):
         return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=r)
     
     r = be.isAddress(address)
-    if (r != 0):
+    if (r != 0 and len(address) != 0):
         return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=r)
 
-    be.editUserData(id, 'name', name)
+    if len(name) != 0:
+        be.editUserData(id, 'name', name)
+    else:
+        be.editUserData(id, 'name', "User")
     be.editUserData(id, 'email', email)
     be.editUserData(id, 'role', new_role)
-    be.editUserData(id, 'birth_date', birthday)
+    if len(birthday) != 0:
+        be.editUserData(id, 'birth_date', birthday)
+    else:
+        be.editUserData(id, 'birth_date', None)
     be.editUserData(id, 'address', address)
-    be.editUserData(id, 'phone_number', phone)
+    if len(phone) != 0:
+        be.editUserData(id, 'phone_number', phone)
+    else:
+        be.editUserData(id, 'phone_number', None)
     be.editUserData(id, 'password', password)
     return render_template('/admin/users_selected.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, all_users=database.getUsers(), selectedUser=database.getUser(id), error=error, suggestions=database.getCategoryNames())
   
@@ -521,30 +530,36 @@ def user_settings_edit_save(t):
         name = request.form['name']
         user = be.getLoggedUser()
         
-        if (name == user['name'] and bday == user['birth_date'] and address == user['address'] and phone == str(user['phone_number'])):
+        if (name == user['name'] and (bday == user['birth_date']) and address == user['address'] and phone == str(user['phone_number'])):
             return render_template('/user/settings.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, page=0, user_calendar=be.getUserCalendar(be.getLoggedUser()), editType=0, saved=True, error=-1)
         
         if (len(name) == 0):
-            user = "User"
+            name = "User"
 
         r = be.isName(name)
         if (r != 0):
             return render_template('/user/settings.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, page=0, user_calendar=be.getUserCalendar(be.getLoggedUser()), editType=0, saved=True, error=r)
         r = be.isDate(bday)
-        if (r != 0):
+        if (r != 0 and len(bday) != 0):
             return render_template('/user/settings.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, page=0, user_calendar=be.getUserCalendar(be.getLoggedUser()), editType=0, saved=True, error=r)
         r = be.isAddress(address)
-        if (r != 0):
+        if (r != 0 and len(address) != 0):
             return render_template('/user/settings.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, page=0, user_calendar=be.getUserCalendar(be.getLoggedUser()), editType=0, saved=True, error=r)    
         r = be.isPhoneNumber(phone)
-        if (r != 0):
+        if (r != 0 and len(phone) != 0):
             return render_template('/user/settings.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, page=0, user_calendar=be.getUserCalendar(be.getLoggedUser()), editType=0, saved=True, error=r)
         
         
         be.editUserData(user['id'], 'name', name)
-        be.editUserData(user['id'], 'birth_date', bday)
+        if (len(bday) != 0):
+            be.editUserData(user['id'], 'birth_date', bday)
+        else:
+            be.editUserData(user['id'], 'birth_date', None)
         be.editUserData(user['id'], 'address', address)
-        be.editUserData(user['id'], 'phone_number', phone)
+        if (len(phone) != 0):
+            be.editUserData(user['id'], 'phone_number', phone)
+        else:
+            be.editUserData(user['id'], 'phone_number', None)
         return render_template('/user/settings.html', logged=be.isUserLogged(), user=be.getLoggedUser(), nav_pages=globals.nav_pages, page=0, user_calendar=be.getUserCalendar(be.getLoggedUser()), editType=0, saved=True, error=0)
     elif (t == 1):
         email = request.form['email']

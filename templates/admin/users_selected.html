@@ -48,11 +48,11 @@
                 {% endif %}
             </select>
             <label for="birthday"><b>Birthday</b></label>
-            <input class="login_form_textbox" type="text" name="birthday" id="birthday" value="{{ selectedUser['birth_date'] }}">
+            <input class="login_form_textbox" type="date" name="birthday" id="birthday" value="{{ getUserBirthdate(selectedUser) }}">
             <label for="address"><b>Address</b></label>
-            <input class="login_form_textbox" type="text" name="address" id="address" value="{{ selectedUser['address'] }}">
+            <input class="login_form_textbox" type="text" name="address" id="address" value="{{ getUserAddress(selectedUser) }}">
             <label for="phone"><b>Phone number</b></label>
-            <input class="login_form_textbox" type="text" name="phone" id="phone" value="{{ selectedUser['phone_number'] }}">
+            <input class="login_form_textbox" type="text" name="phone" id="phone" value="{{ getUserPhoneNumber(selectedUser) }}">
             <button class="login_form_button" type="submit" name="user_btn" id="user_btn" value="0">Proceed</button>
         </form>
     </div>
